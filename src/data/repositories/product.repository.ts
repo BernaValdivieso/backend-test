@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import { Product } from "../../domain/entities/product.entity";
 import { ProductRepositoryInterface } from "../../domain/repository-interfaces/product.repository-interface";
 import AWS from "aws-sdk";
@@ -38,8 +39,13 @@ export const ProductRepository = (): ProductRepositoryInterface => ({
     return output.Items?.map(mapDynamoDBItemToProduct) ?? [];
   },
 
-  create: async (product: Product) => {
+  create: async (params) => {
     const docClient = new AWS.DynamoDB.DocumentClient();
+
+    const product = {
+      ...params,
+      productId: v4(),
+    };
 
     await docClient
       .put({
