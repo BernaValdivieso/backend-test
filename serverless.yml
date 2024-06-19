@@ -33,6 +33,13 @@ functions:
           path: /products/{productId}
           method: get
 
+  getProducts:
+    handler: src/presentation/api/get-products.handler
+    events:
+      - httpApi:
+          path: /products
+          method: get
+
 plugins:
   - serverless-plugin-typescript
 
