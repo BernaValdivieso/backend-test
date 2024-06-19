@@ -1,6 +1,5 @@
 import { Product } from "../entities/product.entity";
 import { ProductRepositoryInterface } from "../repository-interfaces/product.repository-interface";
-import { validateProduct } from "./validators/validate-product";
 
 interface CreateProductUseCaseParams {
   name: string;

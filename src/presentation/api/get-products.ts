@@ -8,7 +8,7 @@ const HEADERS = {
   "content-type": "application/json",
 };
 
-const requestSchema = yup.object().shape({});
+const requestSchema = yup.object({});
 
 const GetProductsHandler =
   ({ getProductsUseCase }: { getProductsUseCase: GetProductsUseCaseInterface }) =>

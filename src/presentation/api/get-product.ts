@@ -9,14 +9,24 @@ const HEADERS = {
 };
 
 const requestSchema = yup.object().shape({
-  productId: yup.string().required(),
+  pathParameters: yup
+    .object()
+    .shape({
+      productId: yup.string().required("ProductId is required"),
+    })
+    .required(),
 });
 
 const GetProductHandler =
   ({ getProductUseCase }: { getProductUseCase: GetProductUseCaseInterface }) =>
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
-      await requestSchema.validate(event.pathParameters, { abortEarly: false });
+      await requestSchema.validate(
+        {
+          pathParameters: event.pathParameters,
+        },
+        { abortEarly: false },
+      );
 
       const product = await getProductUseCase.execute({ productId: event.pathParameters?.productId as string });
 

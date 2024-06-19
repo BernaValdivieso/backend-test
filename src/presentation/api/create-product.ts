@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import { GetProductUseCase, GetProductUseCaseInterface } from "../../domain/use.cases/get-product.use-case";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { handleError } from "../../domain/errors/handle-error";
 import { ProductRepository } from "../../data/repositories/product.repository";
@@ -10,17 +9,27 @@ const HEADERS = {
 };
 
 const requestSchema = yup.object().shape({
-  name: yup.string().required(),
-  description: yup.string().required(),
-  price: yup.number().required(),
-  isAvailable: yup.boolean().required(),
+  body: yup
+    .object()
+    .shape({
+      name: yup.string().required(),
+      description: yup.string().required(),
+      price: yup.number().required(),
+      isAvailable: yup.boolean().required(),
+    })
+    .required(),
 });
 
 const CreateProductHandler =
   ({ createProductUseCase }: { createProductUseCase: CreateProductUseCaseInterface }) =>
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
-      await requestSchema.validate(event.body, { abortEarly: false });
+      await requestSchema.validate(
+        {
+          body: JSON.parse(event.body as string),
+        },
+        { abortEarly: false },
+      );
 
       const { name, description, price, isAvailable } = JSON.parse(event.body as string);
 
@@ -45,4 +54,4 @@ const productRepository = ProductRepository();
 const createProductUseCase = CreateProductUseCase({ productRepository });
 
 export const createProductHandler = CreateProductHandler({ createProductUseCase });
-export const handler = CreateProductHandler;
+export const handler = createProductHandler;
