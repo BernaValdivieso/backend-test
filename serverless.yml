@@ -19,6 +19,13 @@ provider:
             - { "Fn::GetAtt": ["ProductsTable", "Arn"] }
 
 functions:
+  createProduct:
+    handler: src/presentation/api/create-product.handler
+    events:
+      - httpApi:
+          path: /products
+          method: post
+
   getProduct:
     handler: src/presentation/api/get-product.handler
     events:
