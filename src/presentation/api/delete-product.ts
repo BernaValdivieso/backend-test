@@ -1,8 +1,8 @@
 import * as yup from "yup";
-import { GetProductUseCase, GetProductUseCaseInterface } from "../../domain/use.cases/get-product.use-case";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { handleError } from "../../domain/errors/handle-error";
 import { ProductRepository } from "../../data/repositories/product.repository";
+import { DeleteProductUseCase, DeleteProductUseCaseInterface } from "../../domain/use.cases/delete-product.use-case";
 
 const HEADERS = {
   "content-type": "application/json",
@@ -17,8 +17,8 @@ const requestSchema = yup.object().shape({
     .required(),
 });
 
-const GetProductHandler =
-  ({ getProductUseCase }: { getProductUseCase: GetProductUseCaseInterface }) =>
+const DeleteProductHandler =
+  ({ deleteProductUseCase }: { deleteProductUseCase: DeleteProductUseCaseInterface }) =>
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
       await requestSchema.validate(
@@ -28,12 +28,12 @@ const GetProductHandler =
         { abortEarly: false },
       );
 
-      const product = await getProductUseCase.execute({ productId: event.pathParameters?.productId as string });
+      await deleteProductUseCase.execute({ productId: event.pathParameters?.productId as string });
 
       return {
-        statusCode: 200,
+        statusCode: 204,
         headers: HEADERS,
-        body: JSON.stringify(product),
+        body: "",
       };
     } catch (error) {
       return handleError(error);
@@ -41,7 +41,7 @@ const GetProductHandler =
   };
 
 const productRepository = ProductRepository();
-const getProductUseCase = GetProductUseCase({ productRepository });
+const deleteProductUseCase = DeleteProductUseCase({ productRepository });
 
-export const getProductHandler = GetProductHandler({ getProductUseCase });
-export const handler = getProductHandler;
+export const deleteProductHandler = DeleteProductHandler({ deleteProductUseCase });
+export const handler = deleteProductHandler;
