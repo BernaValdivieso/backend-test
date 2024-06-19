@@ -40,6 +40,13 @@ functions:
           path: /products
           method: get
 
+  updateProduct:
+    handler: src/presentation/api/update-product.handler
+    events:
+      - httpApi:
+          path: /products/{productId}
+          method: put
+
 plugins:
   - serverless-plugin-typescript
 

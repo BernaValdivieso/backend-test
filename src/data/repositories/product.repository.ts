@@ -16,7 +16,7 @@ const mapDynamoDBItemToProduct = (item: AWS.DynamoDB.DocumentClient.AttributeMap
 };
 
 export const ProductRepository = (): ProductRepositoryInterface => ({
-  get: async (productId: string) => {
+  get: async (productId) => {
     const docClient = new AWS.DynamoDB.DocumentClient();
 
     const output = await docClient
@@ -57,7 +57,7 @@ export const ProductRepository = (): ProductRepositoryInterface => ({
     return product;
   },
 
-  update: async (product: Product) => {
+  update: async (product) => {
     const docClient = new AWS.DynamoDB.DocumentClient();
 
     await docClient

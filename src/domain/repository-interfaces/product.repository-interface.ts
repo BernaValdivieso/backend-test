@@ -14,6 +14,18 @@ export interface ProductRepositoryInterface {
     price: number;
     isAvailable: boolean;
   }): Promise<Product>;
-  update(product: Product): Promise<Product>;
+  update({
+    productId,
+    name,
+    description,
+    price,
+    isAvailable,
+  }: {
+    productId: string;
+    name: string;
+    description: string;
+    price: number;
+    isAvailable: boolean;
+  }): Promise<Product>;
   delete(productId: string): Promise<void>;
 }
