@@ -70,7 +70,7 @@ export const ProductRepository = (): ProductRepositoryInterface => ({
     return product;
   },
 
-  delete: async (productId: string) => {
+  delete: async (productId) => {
     const docClient = new AWS.DynamoDB.DocumentClient();
 
     await docClient
