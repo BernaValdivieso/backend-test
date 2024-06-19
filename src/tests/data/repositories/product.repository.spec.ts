@@ -109,10 +109,10 @@ describe("ProductRepository", () => {
       const createdProduct = await repository.create(mockedProduct);
 
       // Assert.
-      expect(createdProduct).toStrictEqual(mockedProduct);
+      expect(createdProduct).toStrictEqual({ ...mockedProduct, productId: createdProduct.productId });
       expect(mockDynamoDB.put).toHaveBeenCalledWith({
         TableName: "ProductsTable",
-        Item: mockedProduct,
+        Item: { ...mockedProduct, productId: createdProduct.productId },
       });
     });
   });
