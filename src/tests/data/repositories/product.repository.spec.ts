@@ -1,4 +1,3 @@
-import AWS from "aws-sdk";
 import { ProductRepository } from "../../../data/repositories/product.repository";
 import { ProductFactory } from "../../factories/product.factory";
 

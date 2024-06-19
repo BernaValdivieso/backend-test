@@ -47,6 +47,13 @@ functions:
           path: /products/{productId}
           method: put
 
+  deleteProduct:
+    handler: src/presentation/api/delete-product.handler
+    events:
+      - httpApi:
+          path: /products/{productId}
+          method: delete
+
 plugins:
   - serverless-plugin-typescript
 
