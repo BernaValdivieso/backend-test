@@ -1,53 +1,51 @@
-# Serverless - AWS Node.js Typescript Version 2
+# Disclaimer
 
-Serverless Framework template for zero-config TypeScript support.
-In this version of the template there is no `aws-sdk` npm package as it is recommended to use modular [version 3 of aws-sdk](https://github.com/aws/aws-sdk-js-v3) instead.
+Este es un repositorio para crear un backend básico de test, por lo que faltan muchas funcionalidades que normalmente serían necesarias (coverage en los tests, deploys, etc.). 
+El objetivo es sólo mostrar un poco cómo se manejaría el código en un backend.
+Tomasz Tarnowski sale como contribuyente por haber utilizado su template para crear el proyecto de serverless.
 
-## Features
+## Endpoints
 
-Thanks to [`serverless-typescript`](https://github.com/prisma-labs/serverless-plugin-typescript) plugin:
+El url base es: `https://hen8t7wcoc.execute-api.us-east-1.amazonaws.com`
 
-- Zero-config: Works out of the box without the need to install any other compiler or plugins
-- Supports ES2015 syntax + features (`export`, `import`, `async`, `await`, `Promise`, ...)
-- Supports `sls package`, `sls deploy` and `sls deploy function`
-- Supports `sls invoke local` + `--watch` mode
-- Integrates nicely with [`serverless-offline`](https://github.com/dherault/serverless-offline)
+### Crear un Producto
+- **URL**: `/products`
+- **Método HTTP**: `POST`
+- **Descripción**: Crea un nuevo producto.
+- **Cuerpo de la Solicitud**:
+  ```json
+  {
+    "name": "string",
+    "description": "string",
+    "price": "number",
+    "isAvailable": "boolean"
+  }
 
-## Prerequisites
+### Obtener un Producto
+- **URL**: `/products/{productId}`
+- **Método HTTP**: `GET`
+- **Descripción**: Obtiene un producto específico basado en su ID.
 
-- [`serverless-framework`](https://github.com/serverless/serverless)
-- [`node.js`](https://nodejs.org)
+### Obtener todos los Productos
+- **URL**: `/products`
+- **Método HTTP**: `GET`
+- **Descripción**: Obtiene la lista de todos los productos disponibles.
 
-## Usage
+### Actualizar un Producto
+- **URL**: `/products/{productId}`
+- **Método HTTP**: `PUT`
+- **Descripción**: Actualiza la información de un producto específico basado en su ID.
+- **Cuerpo de la Solicitud**:
+  ```json
+  {
+    "name": "string",
+    "description": "string",
+    "price": "number",
+    "isAvailable": "boolean"
+  }
 
-To create new serverless AWS TypeScript project using this template run:
+### Eliminar un Producto
+- **URL**: `/products/{productId}`
+- **Método HTTP**: `DELETE`
+- **Descripción**: Elimina un producto específico basado en su ID.
 
-```bash
-serverless create \
---template-url https://github.com/ttarnowski/serverless-aws-nodejs-typescript-v2/tree/main \
---path myServiceName
-```
-
-where `myServiceName` should be replaced with the name of your choice.
-
-Then change directory to the newly created one:
-
-```
-cd myServiceName
-```
-
-And run:
-
-```
-npm install
-```
-
-or:
-
-```
-yarn
-```
-
-## Licence
-
-MIT.
